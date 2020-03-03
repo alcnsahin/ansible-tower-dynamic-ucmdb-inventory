@@ -1,6 +1,5 @@
 #!/usr/bin/python
-import urllib
-from urllib.request import urlopen
+from urllib.request import Request
 import json
 
 UCMDB_ENDPOINT = "https://cmdb-hostname:port/rest-api"
@@ -17,8 +16,8 @@ auth_params = {
 }
 
 # authentication
-auth_call = urlopen(UCMDB_ENDPOINT + "/authenticate", json.dumps(auth_params).encode('ascii'), headers, method='POST')
-json_auth_output = json.load(auth_call.read())
+auth_call = Request(UCMDB_ENDPOINT + "/authenticate", json.dumps(auth_params).encode('ascii'), headers, method='POST')
+json_auth_output = json.load(auth_call)
 print(json_auth_output)
 
 # execute tql query
