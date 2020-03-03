@@ -18,7 +18,7 @@ auth_params = {
 
 # authentication
 auth_call = urlopen(UCMDB_ENDPOINT + "/authenticate", json.dumps(auth_params).encode('ascii'), headers, method='POST')
-json_auth_output = json.load(auth_call)
-print(json_auth_output.read())
+json_auth_output = json.load(auth_call.read())
+print(json_auth_output)
 
 # execute tql query
