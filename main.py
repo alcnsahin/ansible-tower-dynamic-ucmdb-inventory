@@ -1,6 +1,5 @@
 #!/usr/bin/python
-from urllib.request import Request
-import json
+import requests
 
 UCMDB_ENDPOINT = "https://cmdb-hostname:port/rest-api"
 UCMDB_USERNAME = 'username'
@@ -16,8 +15,8 @@ auth_params = {
 }
 
 # authentication
-auth_call = Request(UCMDB_ENDPOINT + "/authenticate", json.dumps(auth_params).encode('ascii'), headers, method='POST')
-json_auth_output = json.load(auth_call)
-print(json_auth_output)
-
+auth_call = requests.post(UCMDB_ENDPOINT + "/authenticate", data=auth_params, headers=headers)
+print(auth_call.status_code)
+print("---------------------------------")
+print(auth_call.json())
 # execute tql query
