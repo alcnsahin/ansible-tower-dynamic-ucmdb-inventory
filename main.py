@@ -1,6 +1,16 @@
 #!/usr/bin/python
 import requests
 
+inventories_json = {
+    "_meta": {
+        "hostvars": {
+            "host001": {
+                "var001": "value"
+            }
+        }
+    }
+}
+
 UCMDB_ENDPOINT = "https://cmdb-hostname:port/rest-api"
 UCMDB_USERNAME = 'username'
 UCMDB_PASSWORD = 'password'
@@ -26,8 +36,9 @@ execute_tql_headers = {
     "Content-Type": "application/json"
 }
 execute_tql_params = {
-    "tqlName": "Redhat_Computers"
+    "tqlName": "Redhat_Servers"
 }
-execute_tql = requests.post(UCMDB_ENDPOINT + "/topology", json=execute_tql_params, headers=execute_tql_headers,
+execute_tql = requests.post(UCMDB_ENDPOINT + "/topology", data="Redhat_Servers", headers=execute_tql_headers,
                             verify=False)
 print(execute_tql.json())
+# -
