@@ -2,7 +2,7 @@
 
 '''
 Example Output:
-inventories_json = {
+{
     "_meta": {
         "hostvars": {
             "host001": {
@@ -82,6 +82,7 @@ class UcmdbDynamicInventory(object):
         if self.options.pretty:
             self.json_indent = 2
 
+        self.parse_options()
         self.authenticate()
         self.execute_tql_query()
 
@@ -109,5 +110,6 @@ class UcmdbDynamicInventory(object):
             print(json.dumps(self.result, indent=self.json_indent))
         else:
             sys.exit("usage: --list or --host HOSTNAME [--pretty]")
+
 
 UcmdbDynamicInventory()
