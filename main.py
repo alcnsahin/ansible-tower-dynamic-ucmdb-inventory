@@ -18,6 +18,7 @@ import json
 import urllib3
 import argparse
 import sys
+from __future__ import print_function
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -74,6 +75,10 @@ class UcmdbDynamicInventory(object):
         self.defaultgroup = 'group_all'
         self.options = None
 
+        self.parse_options()
+        self.authenticate()
+        self.execute_tql_query()
+
         self.result = {}
         self.result['_meta'] = {}
         self.result['_meta']['hostvars'] = {}
@@ -81,10 +86,6 @@ class UcmdbDynamicInventory(object):
         self.json_indent = None
         if self.options.pretty:
             self.json_indent = 2
-
-        self.parse_options()
-        self.authenticate()
-        self.execute_tql_query()
 
         for ci in self.cis:
             if ci['type'] == "unix":
