@@ -63,6 +63,9 @@ class UcmdbDynamicInventory(object):
         self.result['_meta'] = {}
         self.result['_meta']['hostvars'] = {}
 
+        self.authenticate()
+        self.execute_tql_query()
+
         for ci in self.cis:
             if ci['type'] == "unix":
                 ip_address = self.get_ip_address(self.get_relations(ci['ucmdbId']))
