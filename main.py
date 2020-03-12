@@ -44,7 +44,7 @@ class UcmdbDynamicInventory(object):
         }
         execute_tql = requests.post(UCMDB_ENDPOINT + "/topology", data="Redhat_Servers", headers=tql_headers,
                                     verify=False)
-        j_out_dict = json.loads(execute_tql.json())
+        j_out_dict = json.loads(execute_tql.text)
         self.cis = j_out_dict["cis"]
         self.relations = j_out_dict["relations"]
 
