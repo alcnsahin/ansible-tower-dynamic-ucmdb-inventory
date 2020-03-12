@@ -15,6 +15,8 @@ inventories_json = {
 
 import requests
 import json
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 UCMDB_ENDPOINT = "https://cmdb-hostname:port/rest-api"
 UCMDB_USERNAME = 'username'
