@@ -16,6 +16,9 @@ inventories_json = {
 import requests
 import json
 import urllib3
+import argparse
+import sys
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 UCMDB_ENDPOINT = "https://cmdb-hostname:port/rest-api"
@@ -33,6 +36,13 @@ auth_params = {
 
 
 class UcmdbDynamicInventory(object):
+
+    def parse_options(self):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--host', nargs=1)
+        parser.add_argument('--list', action='store_true')
+        parser.add_argument('--pretty', action='store_true')
+        self.options = parser.parse_args()
 
     def authenticate(self):
         auth_call = requests.post(UCMDB_ENDPOINT + "/authenticate", json=auth_params, headers=headers, verify=False)
@@ -61,9 +71,16 @@ class UcmdbDynamicInventory(object):
 
     def __init__(self):
 
+        self.defaultgroup = 'group_all'
+        self.options = None
+
         self.result = {}
         self.result['_meta'] = {}
         self.result['_meta']['hostvars'] = {}
+
+        self.json_indent = None
+        if self.options.pretty:
+            self.json_indent = 2
 
         self.authenticate()
         self.execute_tql_query()
@@ -85,7 +102,12 @@ class UcmdbDynamicInventory(object):
                 self.result['_meta']['hostvars'][hostname]['discovered_os_version'] = discovered_os_version
                 self.result['_meta']['hostvars'][hostname]['maintenance_interval'] = maintenance_interval
                 self.result['_meta']['hostvars'][hostname]['maintenance_date'] = maintenance_date
-                print(json.dumps(self.result))
 
+        if self.options.host:
+            print(json.dumps(self.result['_meta']['hostvars'][self.options.host[0]], indent=self.json_indent))
+        elif self.options.list:
+            print(json.dumps(self.result, indent=self.json_indent))
+        else:
+            sys.exit("usage: --list or --host HOSTNAME [--pretty]")
 
 UcmdbDynamicInventory()
