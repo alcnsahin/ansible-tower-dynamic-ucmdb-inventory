@@ -20,6 +20,7 @@ These scripts calls tql query named "Redhat_Servers" from ucmdb and returns some
 ### execute-tql-query-py3.py
 
 Ansible Tower 3.6.2 uses Python 2.7.5
+
 If you'd like to work different python version you need to do following instructions
 
 [Preparing a New Custom Virtualenv](https://github.com/ansible/awx/blob/devel/docs/custom_virtualenvs.md)
