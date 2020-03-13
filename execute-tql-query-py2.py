@@ -41,7 +41,7 @@ class UcmdbDynamicInventory(object):
         execute_tql.add_header("Authorization", "Bearer " + self.token)
         execute_tql.add_header("Content-Type", "application/json")
         tql_response = urllib2.urlopen(execute_tql, data="Redhat_Servers", context=ctx)
-        j_out_dict = json.loads(tql_response.read())
+        j_out_dict = json.dumps(json.loads(tql_response.read()))
         self.cis = json.loads(j_out_dict)["cis"]
         self.relations = json.loads(j_out_dict)["relations"]
 
@@ -97,7 +97,7 @@ class UcmdbDynamicInventory(object):
                 self.result['_meta']['hostvars'][hostname]['discovered_os_version'] = discovered_os_version
                 self.result['_meta']['hostvars'][hostname]['maintenance_interval'] = maintenance_interval
                 self.result['_meta']['hostvars'][hostname]['maintenance_date'] = maintenance_date
-                self.result['unix']['hosts'] = hostname
+                self.result['unix']['hosts'].append(hostname)
 
         if self.options.host:
             print(json.dumps(self.result['_meta']['hostvars'][self.options.host[0]], indent=self.json_indent))
