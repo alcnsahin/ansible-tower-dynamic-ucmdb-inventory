@@ -7,6 +7,7 @@ These scripts calls tql query named "Redhat_Servers" from ucmdb and returns some
 ### execute-tql-query-py2.py
 
 `tested on Python 2.7.5`
+`tested on Ansible Tower 3.6.2 and ansible 2.9.1`
 
 **usage:** 
     
