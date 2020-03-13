@@ -59,13 +59,10 @@ class UcmdbDynamicInventory(object):
         self.defaultgroup = 'group_all'
         self.options = None
 
-        self.parse_options()
-        self.authenticate()
-        self.execute_tql_query()
-
         self.token = None
         self.cis = None
         self.relations = None
+
         self.result = {}
         self.result['_meta'] = {}
         self.result['_meta']['hostvars'] = {}
@@ -74,6 +71,10 @@ class UcmdbDynamicInventory(object):
         self.result['unix'] = {}
         self.result['unix']['children'] = []
         self.result['unix']['hosts'] = []
+
+        self.parse_options()
+        self.authenticate()
+        self.execute_tql_query()
 
         self.json_indent = None
         if self.options.pretty:
