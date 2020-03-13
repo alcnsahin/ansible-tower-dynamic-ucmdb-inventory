@@ -69,6 +69,11 @@ class UcmdbDynamicInventory(object):
         self.result = {}
         self.result['_meta'] = {}
         self.result['_meta']['hostvars'] = {}
+        self.result['all'] = {}
+        self.result['all']['children'] = ["unix"]
+        self.result['unix'] = {}
+        self.result['unix']['children'] = []
+        self.result['unix']['hosts'] = []
 
         self.json_indent = None
         if self.options.pretty:
@@ -91,6 +96,7 @@ class UcmdbDynamicInventory(object):
                 self.result['_meta']['hostvars'][hostname]['discovered_os_version'] = discovered_os_version
                 self.result['_meta']['hostvars'][hostname]['maintenance_interval'] = maintenance_interval
                 self.result['_meta']['hostvars'][hostname]['maintenance_date'] = maintenance_date
+                self.result['unix']['hosts'] = hostname
 
         if self.options.host:
             print(json.dumps(self.result['_meta']['hostvars'][self.options.host[0]], indent=self.json_indent))
