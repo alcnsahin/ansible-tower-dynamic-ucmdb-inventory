@@ -1,6 +1,6 @@
 # UCMDB Dynamic Inventory Plugin for Ansible Tower
 
-These scripts are basic examples to get dynamic inventory from Microfocus UCMDB. I developed these scripts for a specific purpose. 
+These scripts are simple examples to get dynamic inventory from Microfocus UCMDB. I developed these scripts for a specific purpose. 
 
 These scripts calls tql query named "Redhat_Servers" from ucmdb and returns some unix servers.
 
