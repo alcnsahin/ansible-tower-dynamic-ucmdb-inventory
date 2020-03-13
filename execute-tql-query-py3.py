@@ -1,18 +1,5 @@
 #!/usr/bin/python
 
-'''
-Example Output:
-{
-    "_meta": {
-        "hostvars": {
-            "host001": {
-                "var001": "value"
-            }
-        }
-    }
-}
-'''
-
 import requests
 import json
 import urllib3
@@ -26,14 +13,6 @@ UCMDB_ENDPOINT = "https://cmdb-hostname:port/rest-api"
 UCMDB_USERNAME = 'username'
 UCMDB_PASSWORD = 'password'
 UCMDB_CLIENT_CONTEXT = 1
-headers = {
-    "Content-Type": "application/json"
-}
-auth_params = {
-    'username': UCMDB_USERNAME,
-    'password': UCMDB_PASSWORD,
-    'clientContext': UCMDB_CLIENT_CONTEXT
-}
 
 
 class UcmdbDynamicInventory(object):
@@ -46,6 +25,14 @@ class UcmdbDynamicInventory(object):
         self.options = parser.parse_args()
 
     def authenticate(self):
+        headers = {
+            "Content-Type": "application/json"
+        }
+        auth_params = {
+            'username': UCMDB_USERNAME,
+            'password': UCMDB_PASSWORD,
+            'clientContext': UCMDB_CLIENT_CONTEXT
+        }
         auth_call = requests.post(UCMDB_ENDPOINT + "/authenticate", json=auth_params, headers=headers, verify=False)
         # print(auth_call.status_code)
         self.token = auth_call.json()["token"]
@@ -79,6 +66,8 @@ class UcmdbDynamicInventory(object):
         self.authenticate()
         self.execute_tql_query()
 
+        self.cis = None
+        self.relations = None
         self.result = {}
         self.result['_meta'] = {}
         self.result['_meta']['hostvars'] = {}
