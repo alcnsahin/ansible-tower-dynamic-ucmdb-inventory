@@ -7,6 +7,7 @@ These scripts calls tql query named "Redhat_Servers" from ucmdb and returns some
 ### execute-tql-query-py2.py
 
 `tested on Python 2.7.5`
+
 `tested on Ansible Tower 3.6.2 and ansible 2.9.1`
 
 **usage:** 
@@ -17,6 +18,11 @@ These scripts calls tql query named "Redhat_Servers" from ucmdb and returns some
     python execute-tql-query-py2.py --hostname <hostname> --pretty
 
 ### execute-tql-query-py3.py
+
+Ansible Tower 3.6.2 uses Python 2.7.5
+If you'd like to work different python version you need to do following instructions
+
+[Preparing a New Custom Virtualenv](https://github.com/ansible/awx/blob/devel/docs/custom_virtualenvs.md)
 
 `tested on Python 3.6.9`
 
