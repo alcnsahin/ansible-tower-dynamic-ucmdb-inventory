@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import json
 import urllib2
@@ -34,7 +34,7 @@ class UcmdbDynamicInventory(object):
         auth_call = urllib2.Request(UCMDB_ENDPOINT + "/authenticate")
         auth_call.add_header("Content-Type", "application/json")
         response = urllib2.urlopen(auth_call, data=json.dumps(auth_params), context=ctx)
-        self.token = auth_call.json()["token"]
+        self.token = json.loads(response.read())['token']
 
     def execute_tql_query(self):
         execute_tql = urllib2.Request(UCMDB_ENDPOINT + "/topology")
@@ -42,10 +42,8 @@ class UcmdbDynamicInventory(object):
         execute_tql.add_header("Content-Type", "application/json")
         tql_response = urllib2.urlopen(execute_tql, data="Redhat_Servers", context=ctx)
         j_out_dict = json.loads(tql_response.read())
-
-        print(j_out_dict.read())
-        self.cis = j_out_dict["cis"]
-        self.relations = j_out_dict["relations"]
+        self.cis = json.loads(j_out_dict)["cis"]
+        self.relations = json.loads(j_out_dict)["relations"]
 
     def get_relations(self, ucmdbId):
         for r in self.relations:
@@ -65,6 +63,7 @@ class UcmdbDynamicInventory(object):
         self.authenticate()
         self.execute_tql_query()
 
+        self.token = None
         self.cis = None
         self.relations = None
         self.result = {}
