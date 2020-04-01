@@ -47,7 +47,8 @@ class UcmdbDynamicInventory(object):
 
     def get_relations(self, ucmdbId):
         for r in self.relations:
-            return r['end2Id'] if r['end1Id'] == ucmdbId else r['end2Id']
+            if r['end1Id'] == ucmdbId:
+                return r['end2Id']
 
     def get_ip_address(self, ucmdbId):
         for c in self.cis:
